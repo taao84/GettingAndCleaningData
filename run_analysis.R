@@ -28,16 +28,17 @@ courseProjectCreateDataset = function() {
   features = read.table("features.txt");
   
   # Merge the training sets
-  trainingSet = cbind(subject_train, x_train, y_train)
+  trainingSet = cbind(subject_train, y_train, x_train)
   
   # Merge the test sets
-  testSet = cbind(subject_test, x_test, y_test)
+  testSet = cbind(subject_test, y_test, x_test)
   
   # Join the training and the test dataset
   finalDataset = rbind(trainingSet, testSet)
   
-  columnNames = c("Subject", as.vector(features[, 2]), "ActivityLabel")
-  meanAndStdColumns = sort(c(grep("-mean", columnNames), grep("-std", columnNames)), decreasing = FALSE)
+  # Define the column names
+  columnNames = c("Subject", "ActivityLabel", as.vector(features[, 2]))
+  meanAndStdColumns = sort(c(1, 2, grep("-mean", columnNames), grep("-std", columnNames)), decreasing = FALSE)
   
   colnames(finalDataset) <- columnNames
   finalDataset[, meanAndStdColumns]
