@@ -41,5 +41,9 @@ courseProjectCreateDataset = function() {
   meanAndStdColumns = sort(c(1, 2, grep("-mean", columnNames), grep("-std", columnNames)), decreasing = FALSE)
   
   colnames(finalDataset) <- columnNames
-  finalDataset[, meanAndStdColumns]
+  finalDataset = finalDataset[, meanAndStdColumns]
+  
+  activityLabels = read.table("activity_labels.txt")
+  finalDataset = merge(x = activityLabels, y = finalDataset, by.x = "V1", by.y = "ActivityLabel")
+  finalDataset
 }
