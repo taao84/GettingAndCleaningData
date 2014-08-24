@@ -37,6 +37,8 @@ courseProjectCreateDataset = function() {
   finalDataset = rbind(trainingSet, testSet)
   
   columnNames = c("Subject", as.vector(features[, 2]), "ActivityLabel")
-  colnames(finalDataset) = columnNames
-  finalDataset
+  meanAndStdColumns = sort(c(grep("-mean", columnNames), grep("-std", columnNames)), decreasing = FALSE)
+  
+  colnames(finalDataset) <- columnNames
+  finalDataset[, meanAndStdColumns]
 }
